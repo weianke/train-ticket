@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
-function App() {
+function App(props) {
+  const [count, setCount] = useState(() => {
+    return props.defaultCount || 0;
+  });
+  const [name, setName] = useState('anke')
+
+  useEffect(() => {
+     setName('ankeF' + count)
+  }, [count])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <buton 
+      type="button"
+      onClick={() => {
+        setCount(count + 1)
+      }}
+    >
+      Click ({count}), {name}
+    </buton>
+  )
 }
 
-export default App;
+export default App
