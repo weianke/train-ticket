@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, createContext, useContext } from 'react'
+import React, { Component, useState, useEffect, createContext, useContext, useRef} from 'react'
 import logo from './logo.svg'
 import './App.css'
 
@@ -36,6 +36,7 @@ function Counter() {
 
 
 function App(props) {
+   const addRef = useRef(null)
   const [count, setCount] = useState(() => {
     return props.defaultCount || 0
   })
@@ -75,6 +76,10 @@ function App(props) {
     }
   })
 
+  const inputValue = () => {
+      console.log(addRef.current.value);
+  }
+
   return (
     <div>
       <buton
@@ -99,6 +104,11 @@ function App(props) {
         <Bar></Bar>
         <Counter></Counter>
       </CountContext.Provider>
+
+      <input type="text" ref={addRef} />
+      <button type="button" onClick={() => {
+        inputValue()
+      }}>获取input值</button>
     </div>
   )
 }
