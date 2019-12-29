@@ -1,6 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component, useState, useEffect, createContext, useContext } from 'react'
 import logo from './logo.svg'
 import './App.css'
+
+
+const CountContext = createContext();
+
+class Foo extends Component {
+  render() {
+    return (
+      <CountContext.Consumer>
+        {
+          count => <h1>{count}</h1>
+        }
+      </CountContext.Consumer>
+    )
+  }
+}
+
+class Bar extends Component {
+  static contextType = CountContext;
+  render() {
+    const count = this.context;
+    return (
+       <h1>{count}</h1>
+    )
+  }
+}
+
+function Counter() {
+  const count = useContext(CountContext);
+  return (
+    <h1>{count}</h1>
+  )
+}
+
 
 function App(props) {
   const [count, setCount] = useState(() => {
@@ -61,6 +94,11 @@ function App(props) {
           size {size.width},{size.height}
         </p>
       )}
+      <CountContext.Provider value={count}>
+        <Foo></Foo>
+        <Bar></Bar>
+        <Counter></Counter>
+      </CountContext.Provider>
     </div>
   )
 }
